@@ -21,8 +21,8 @@ public class Game {
      */
     State state = State.X_MOVE;
 public boolean isOver(){
-   if  ((state==State.X_MOVE)||(state==State.O_MOVE))
-       return false;
+   if  ((state==State.X_MOVE)||(state==State.O_MOVE))        return false;
+    return true;
 }
 
     public Game(int size) {

@@ -21,6 +21,7 @@ public class ConsoleView implements GameView {
 
     @Override
     public Move getMove() {
+        int x=-1,y=-1;
         while (true) {
             System.out.println("Ваш ход! Введите строку и столбец Вашего хода:");
             Scanner sc = new Scanner(System.in);
