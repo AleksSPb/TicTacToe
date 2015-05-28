@@ -20,6 +20,10 @@ public class Game {
      * Состояние игры
      */
     State state = State.X_MOVE;
+public boolean isOver(){
+   if  ((state==State.X_MOVE)||(state==State.O_MOVE))
+       return false;
+}
 
     public Game(int size) {
         this.size = size;
@@ -45,14 +49,18 @@ public class Game {
      * @param x координата по горизонтали (столбец)
      * @param y координата по вертикали (строка)
      */
-    public void move(int x, int y) throws UserException {
+    public boolean correctMove(int x, int y) throws UserException {
         if (x < 0 || x >= size)
             throw new UserException("x за пределами поля");
         if (y < 0 || y >= size)
             throw new UserException("y за пределами поля");
         if (field[x][y] != Cell.EMPTY)
             throw new UserException("Ячейка занята x = " + x + " y = " + y);
+        return true;
+    }
+    public void move(int x, int y) throws UserException {
 
+if (correctMove(x,y))
         switch (state) {
             case X_MOVE:
                 field[x][y] = Cell.X;
