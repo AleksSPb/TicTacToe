@@ -19,17 +19,18 @@ public class Main {
        int i=0;
       //  GameView gui = new SwingView();
         while (!game.isOver()) {
-            if (i>10) break;
+            if (i>9) break;
             gameView.render(game);
             Move curMove=gameView.getMove();
-            try{game.move(curMove.x, curMove.y);}
+            try{game.move(curMove.x, curMove.y);
+            if (game.gameEnd()) break;}
             catch (UserException ex) {
                 System.out.println("Ввод некорректен, повторите ввод. Введите через пробел два числа менее " +game.getSize());
-                i++;
-
-            }
+                  }
+            i++;
     }
 
+        System.out.println("Game over! Result - " + (game.getState()).name);
 
     }
 

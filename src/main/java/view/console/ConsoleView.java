@@ -17,6 +17,16 @@ public class ConsoleView implements GameView {
 
     public void render(Game game) {
         // TODO: Реализовать
+        System.out.println("Next "+(game.getState()).name);
+        System.out.println("________ Game field size "+game.getSize());
+        for (int x = 0; x < game.getSize(); x++) {
+            System.out.print("|");
+            for (int y = 0; y < game.getSize(); y++) {
+                System.out.print(game.field[x][y].name);
+            }
+            System.out.println("|");
+        }
+        System.out.println("----------- Game state" +game.isOver());
     }
 
     @Override

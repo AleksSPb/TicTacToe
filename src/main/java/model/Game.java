@@ -15,7 +15,7 @@ public class Game {
      * Координаты отсчитываем от
      * верхнего левого угла
      */
-    final Cell[][] field;
+    public final Cell[][] field;
     /**
      * Состояние игры
      */
@@ -64,13 +64,95 @@ if (correctMove(x,y))
         switch (state) {
             case X_MOVE:
                 field[x][y] = Cell.X;
+                state=State.O_MOVE;
                 break;
             case O_MOVE:
                 field[x][y] = Cell.O;
+                state=State.X_MOVE;
                 break;
             default:
                 throw new UserException("Ход невозможен!");
         }
+    }
+
+    public boolean gameEnd()
+    {
+        //check rows
+        for (int x = 0; x < size; x++) {
+            int counter=1;
+            if (field[x][0]!=Cell.EMPTY)
+            for (int y = 1; y < size; y++) {
+                if (field[x][0]!=field[x][y]) break;
+                counter++;
+            }
+            if (counter==size) {
+                System.out.println("Find horizontal line!!!");
+                if (field[x][0]==Cell.X) state=State.X_WINS;
+                else state=State.O_WINS;
+                return true;
+            }
+        }
+
+        //check columns
+        for (int x = 0; x < size; x++) {
+            int counter=1;
+            if (field[0][x]!=Cell.EMPTY)
+            for (int y = 1; y < size; y++) {
+                if (field[0][x]!=field[y][x]) break;
+                counter++;
+            }
+            if (counter==size) {
+                System.out.println("Find vertical line!!!");
+                if (field[0][x]==Cell.X) state=State.X_WINS;
+                else state=State.O_WINS;
+                return true;
+            }
+        }
+
+        //check diagonal
+
+            int counter=1;
+            if (field[0][0]!=Cell.EMPTY)
+            for (int y = 1; y < size; y++) {
+                if (field[0][0]!=field[y][y]) break;
+                counter++;
+            }
+            if (counter==size) {
+                System.out.println("Find diagonal line!!!");
+                if (field[0][0]==Cell.X) state=State.X_WINS;
+                else state=State.O_WINS;
+                return true;
+            }
+
+        //check diagonal
+
+       counter=1;
+        if (field[0][size-1]!=Cell.EMPTY)
+        for (int y = 1; y < size; y++) {
+            if (field[0][size-1]!=field[y][size-1-y]) break;
+            counter++;
+        }
+        if (counter==size) {
+            System.out.println("Find revers diagonal line!!!");
+            if (field[0][size-1]==Cell.X) state=State.X_WINS;
+            else state=State.O_WINS;
+            return true;
+        }
+
+        //check draw
+
+        for (int x = 0; x < size; x++)
+            for (int y = 0; y < size; y++) {
+                if (field[x][y]==Cell.EMPTY) return false;
+            }
+        state=State.DRAW;
+        return true;
+
+
+    }
+
+    public State getState() {
+        return state;
     }
 
     public enum State {
@@ -84,6 +166,11 @@ if (correctMove(x,y))
 
         State(String name) {
             this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return "State: " + name;
         }
     }
 }
